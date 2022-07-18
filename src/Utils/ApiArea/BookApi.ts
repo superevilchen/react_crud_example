@@ -17,3 +17,7 @@ export const deleteBook = async (id: number) => {
 export const getBooks = async () => {
     return await axios.get<Book[]>(`${globals.urls.books}`)
 }
+
+export const getBooksAuthor = async (id: number) => {
+    return await axios.get<Book[]>(`${globals.urls.books}${id}`)
+}

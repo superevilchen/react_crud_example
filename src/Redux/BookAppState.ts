@@ -4,6 +4,8 @@ import { Book } from "../Models/Book";
 export class BookAppState {
     public Books: Book[] = [];
     public isRead: boolean = false;
+    public authorBooks: Book[] = [];
+    public authorBooksIsRead: boolean = false;
 }
 
 // Step 2 - Define all possible action for your application state
@@ -13,6 +15,8 @@ export enum BookActionType {
     BookUpdated = "BookUpdated",
     BookDeleted = "BookDeleted",
     BooksRead = "BooksRead",
+    AuthorBooksDownloaded = "AuthorBooksDownloaded",
+    authorBooksIsRead = "authorBooksIsRead"
 }
 
 // Step 3 - Define Action Interface to describe actionAction & payload if needed
@@ -42,6 +46,14 @@ export function BooksReadAction(): BookAction {
     return { type: BookActionType.BooksRead };
 }
 
+export function AuthorBooksDownloadedAction(Books: Book[]): BookAction {
+    return { type: BookActionType.AuthorBooksDownloaded, payload: Books};
+}
+
+export function AuthorBooksIsReadAction(): BookAction {
+    return { type: BookActionType.authorBooksIsRead };
+}
+
 // Step 5 - Reducer function perform the required action
 export function bookReducer(currentState: BookAppState = new BookAppState(),action:BookAction): BookAppState{
     // const newState = new CatsAppState();
@@ -63,8 +75,15 @@ export function bookReducer(currentState: BookAppState = new BookAppState(),acti
             case BookActionType.BookDeleted:
                 newState.Books = newState.Books.filter(c=>c.id !== action.payload);
             break
+        case BookActionType.AuthorBooksDownloaded:
+            newState.authorBooks = action.payload;
+            newState.authorBooksIsRead = true;
+            break;
         case BookActionType.BooksRead:
             newState.isRead = false;
+            break;
+        case BookActionType.authorBooksIsRead:
+            newState.authorBooksIsRead = false;
             break;
     }
     return newState;

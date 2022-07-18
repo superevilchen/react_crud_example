@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Book } from '../../Models/Book';
 
 interface BookItemProps{
@@ -7,6 +7,8 @@ interface BookItemProps{
 }
 
 function BookItem(props: BookItemProps) {
+  const location = useLocation();
+
   return (
       <div>
           <p>ID: {props.book.id}</p>
@@ -15,8 +17,14 @@ function BookItem(props: BookItemProps) {
 
           {props.book.author ?  <p>Author: {props.book.author?.name}</p> : <></>}
 
-          <Link to={`/update-book/${props.book.id}`}>Update</Link>
+      {!location.pathname.includes("books-by-author") ?
+        <>
+        <Link to={`/update-book/${props.book.id}`}>Update</Link>
       <Link to={`/delete-book/${props.book.id}`}>Delete</Link>
+        </>
+        :
+        <></>}
+          
     </div>
   )
 }
