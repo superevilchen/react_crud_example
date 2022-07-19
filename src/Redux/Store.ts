@@ -2,6 +2,7 @@ import { combineReducers, createStore } from "redux";
 import { authReducer } from "./AuthAppState";
 import { authorReducer } from "./AuthorAppState";
 import { bookReducer } from "./BookAppState";
+import { favoriteReducer } from "./FavoritesAppState";
 
 // Single Reducer
 //const store = createStore(catsReducer);
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   authors: authorReducer,
   books: bookReducer,
   auth: authReducer,
+  favorites: favoriteReducer,
 });
 const store = createStore(reducers);
 

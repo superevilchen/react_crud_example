@@ -5,6 +5,9 @@ import { Book } from "../Models/Book";
 export class FavoriteAppState {
   public favoriteBooks: Book[] = [];
   public favoriteAuthors: Author[] = [];
+  public favoriteBooksRead = false;
+  public favoriteAuthorsRead = false;
+
 }
 
 // Step 2 - Define all possible action for your application state
@@ -13,6 +16,9 @@ export enum FavoriteActionType {
   FavoriteAuthorsDownloaded = "FavoriteAuthorsDownloaded",
   FavoriteBookAdded = "FavoriteBookAdded",
   FavoriteAuthorAdded = "FavoriteAuthorAdded",
+  FavoriteBooksClear = "FavoriteBooksClear",
+  FavoriteAuthorsClear = "FavoriteAuthorsClear",
+
 }
 
 // Step 3 - Define Action Interface to describe actionAction & payload if needed
@@ -26,7 +32,7 @@ export function FavoriteBooksDownloadedAction(books: Book[]): FavoriteAction {
   return { type: FavoriteActionType.FavoriteBooksDownloaded, payload: books };
 }
 
-export function FavoriteAuthorsDownloaded(authors: Author[]): FavoriteAction {
+export function FavoriteAuthorsDownloadedAction(authors: Author[]): FavoriteAction {
   return {
     type: FavoriteActionType.FavoriteAuthorsDownloaded,
     payload: authors,
@@ -41,8 +47,16 @@ export function FavoriteAuthorAddedAction(author: Author): FavoriteAction {
   return { type: FavoriteActionType.FavoriteAuthorAdded, payload: author };
 }
 
+export function FavoriteBooksClearAction(): FavoriteAction {
+  return { type: FavoriteActionType.FavoriteBooksClear };
+}
+
+export function FavoriteAuthorsClearAction(): FavoriteAction {
+  return { type: FavoriteActionType.FavoriteAuthorsClear };
+}
+
 // Step 5 - Reducer function perform the required action
-export function catsReducer(
+export function favoriteReducer(
   currentState: FavoriteAppState = new FavoriteAppState(),
   action: FavoriteAction
 ): FavoriteAppState {
@@ -53,10 +67,12 @@ export function catsReducer(
   switch (action.type) {
     case FavoriteActionType.FavoriteBooksDownloaded:
       newState.favoriteBooks = action.payload;
+      newState.favoriteBooksRead = true;
       break;
 
     case FavoriteActionType.FavoriteAuthorsDownloaded:
       newState.favoriteAuthors = action.payload;
+      newState.favoriteAuthorsRead = true;
       break;
 
     case FavoriteActionType.FavoriteBookAdded:
@@ -66,6 +82,17 @@ export function catsReducer(
     case FavoriteActionType.FavoriteAuthorAdded:
       newState.favoriteAuthors.push(action.payload);
       break;
+
+        case FavoriteActionType.FavoriteBooksClear:
+      newState.favoriteBooks = [];
+      newState.favoriteBooksRead = false;
+      break;
+    
+      case FavoriteActionType.FavoriteAuthorsClear:
+        newState.favoriteAuthors = [];
+        newState.favoriteAuthorsRead = false;
+        break;
+    
   }
   return newState;
 }

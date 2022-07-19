@@ -32,6 +32,7 @@ export enum ErrMsg {
   FAIL_LOGIN = "Failed to login",
   FAIL_LOGOUT = "Failed to log out",
   FAIL_REGISTER = "Failed to register",
+  PLS_LOGIN = "Please login",
 }
 class Notify {
   private notification = new Notyf({

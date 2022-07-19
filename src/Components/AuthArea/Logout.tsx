@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { logoutAction } from '../../Redux/AuthAppState';
 import { AuthorsClearAction, authorsReadAction } from '../../Redux/AuthorAppState';
 import { AuthorBooksIsReadAction, BooksClearAction, BooksReadAction } from '../../Redux/BookAppState';
+import { FavoriteAuthorsClearAction, FavoriteBooksClearAction } from '../../Redux/FavoritesAppState';
 import store from '../../Redux/Store';
 import notify, { SccMsg } from '../../Utils/Notification/Notify';
 
@@ -23,7 +24,15 @@ function Logout() {
         store.dispatch(AuthorBooksIsReadAction());
         store.dispatch(BooksReadAction());
         store.dispatch(BooksClearAction());
+
+        // clear favorite reducer
+        store.dispatch(FavoriteBooksClearAction());
+        store.dispatch(FavoriteAuthorsClearAction());
+
+
         navigate("/");
+
+        
     });
 
     return (

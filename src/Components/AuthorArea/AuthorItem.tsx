@@ -1,14 +1,34 @@
 import moment from "moment";
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Author } from "../../Models/Author";
+import { User } from "../../Models/User";
+import { FavoriteAuthorAddedAction } from "../../Redux/FavoritesAppState";
+import store from "../../Redux/Store";
+import { addFavoriteAuthor } from "../../Utils/ApiArea/AuthorApi";
+import notify, { ErrMsg, SccMsg } from "../../Utils/Notification/Notify";
 
 interface AuthorItemProps {
   author: Author;
 }
 
 function AuthorItem(props: AuthorItemProps) {
+
+  const [user, setUser] = useState<User>(store.getState().auth.user);
+  
   const location = useLocation();
+
+  const navigate = useNavigate();
+
+  const addToFavorite = () => {
+    addFavoriteAuthor(props.author.id)
+      .then(() => {
+        store.dispatch(FavoriteAuthorAddedAction(props.author))
+        notify.success(SccMsg.ADDED_AUTHOR)
+        navigate("/favorite-authors")
+      })
+    .catch(() => notify.error(ErrMsg.FAIL_ADDED_AUTHOR))
+  }
 
   return (
     <div>
@@ -24,8 +44,28 @@ function AuthorItem(props: AuthorItemProps) {
             </Link>
           </button>
 
-          <Link to={`/update-author/${props.author.id}`}>Update</Link>
+          {user.role === "ADMIN" ?
+            <>
+             <Link to={`/update-author/${props.author.id}`}>Update</Link>
           <Link to={`/delete-author/${props.author.id}`}>Delete</Link>
+            </>
+            :
+            <>
+              {store.getState().favorites.favoriteAuthors.filter(a => a.id === props.author.id)[0] ?
+                <>
+                
+                {!location.pathname.includes("favorite-authors") ?
+                <h4>Already in your favorites!</h4>
+                :
+                <></>}
+                  
+                </>
+                :
+                <>
+                <button onClick={addToFavorite}>Add to Favorites</button>
+                </>}
+            </>}
+         
         </>
       ) : (
         <></>
@@ -33,5 +73,4 @@ function AuthorItem(props: AuthorItemProps) {
     </div>
   );
 }
-
 export default AuthorItem;

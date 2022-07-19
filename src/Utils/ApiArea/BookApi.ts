@@ -26,3 +26,7 @@ export const getBooksAuthor = async (id: number) => {
 export const addFavoriteBook = async (bookID: number) => {
   return await TokenAxios.post<any>(`${globals.urls.books}favorite/${bookID}`);
 };
+
+export const getFavoriteBooks = async () => {
+  return await TokenAxios.get<Book[]>(`${globals.urls.books}all-favorites)`);
+}

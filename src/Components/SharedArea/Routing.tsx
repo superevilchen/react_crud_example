@@ -6,11 +6,13 @@ import Register from "../AuthArea/Register";
 import AddAuthor from "../AuthorArea/AddAuthor";
 import AuthorList from "../AuthorArea/AuthorList";
 import DeleteAuthor from "../AuthorArea/DeleteAuthor";
+import FavoriteAuthors from "../AuthorArea/FavoriteAuthors";
 import UpdateAuthor from "../AuthorArea/UpdateAuthor";
 import AddBook from "../BookArea/AddBook";
 import BookList from "../BookArea/BookList";
 import BooksByAuthor from "../BookArea/BooksByAuthor";
 import DeleteBook from "../BookArea/DeleteBook";
+import FavoriteBooks from "../BookArea/FavoriteBooks";
 import UpdateBook from "../BookArea/UpdateBook";
 import About from "./About";
 import Home from "./Home";
@@ -36,8 +38,8 @@ function Routing() {
       <Route path="/add-author" element={<AddAuthor />} />
       <Route path="/update-author/:id" element={<UpdateAuthor />} />
       <Route path="/delete-author/:id" element={<DeleteAuthor />} /> 
-      <Route path="/author-books/:id" element={<BooksByAuthor />} /> 
-
+      <Route path="/author-books/:id" element={<BooksByAuthor />} />
+      <Route path="/favorite-books" element={<FavoriteBooks/>}/>
 
             {/* book related components */}
       <Route path="/books" element={<BookList />} />
@@ -45,6 +47,8 @@ function Routing() {
     <Route path="/delete-book/:id" element={<DeleteBook />} /> 
       <Route path="/update-book/:id" element={<UpdateBook />} />
       <Route path="/books-by-author/:id" element={<BooksByAuthor />} /> 
+      <Route path="/favorite-authors" element={<FavoriteAuthors/>}/>
+
 
 
       {/* 404 - must be last */}

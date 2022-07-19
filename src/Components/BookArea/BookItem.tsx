@@ -1,13 +1,33 @@
-import React from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Book } from '../../Models/Book';
+import { User } from '../../Models/User';
+import { FavoriteBookAddedAction } from '../../Redux/FavoritesAppState';
+import store from '../../Redux/Store';
+import { addFavoriteBook } from '../../Utils/ApiArea/BookApi';
+import notify, { ErrMsg, SccMsg } from '../../Utils/Notification/Notify';
 
 interface BookItemProps{
     book: Book;
 }
 
 function BookItem(props: BookItemProps) {
+
+  const [user, setUser] = useState<User>(store.getState().auth.user);
+
   const location = useLocation();
+
+  const navigate = useNavigate();
+
+  const addToFavorite = () => {
+    addFavoriteBook(props.book.id)
+      .then(() => {
+        store.dispatch(FavoriteBookAddedAction(props.book))
+        notify.success(SccMsg.ADDED_BOOK)
+        navigate("/favorite-books")
+      })
+    .catch(() => notify.error(ErrMsg.FAIL_ADDED_BOOK))
+  }
 
   return (
       <div>
@@ -18,9 +38,24 @@ function BookItem(props: BookItemProps) {
           {props.book.author ?  <p>Author: {props.book.author?.name}</p> : <></>}
 
       {!location.pathname.includes("books-by-author") ?
+        
         <>
-        <Link to={`/update-book/${props.book.id}`}>Update</Link>
-      <Link to={`/delete-book/${props.book.id}`}>Delete</Link>
+          
+          {user.role === "ADMIN" ? <><Link to={`/update-book/${props.book.id}`}>Update</Link>
+            <Link to={`/delete-book/${props.book.id}`}>Delete</Link></> :
+
+            <>
+              {store.getState().favorites.favoriteBooks.filter(b => b.id === props.book.id)[0] ?
+                <>
+                  
+                  {!location.pathname.includes("favorite-books") ? <h4>Already in your favorites!</h4> : <></>}
+                  
+                </>
+                :
+                <button onClick={addToFavorite}>Add to Favorites</button>}
+              
+            </>}
+        
         </>
         :
         <></>}
