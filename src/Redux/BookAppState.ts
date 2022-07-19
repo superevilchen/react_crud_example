@@ -16,7 +16,8 @@ export enum BookActionType {
     BookDeleted = "BookDeleted",
     BooksRead = "BooksRead",
     AuthorBooksDownloaded = "AuthorBooksDownloaded",
-    authorBooksIsRead = "authorBooksIsRead"
+    authorBooksIsRead = "authorBooksIsRead",
+    BooksClear = "BooksClear",
 }
 
 // Step 3 - Define Action Interface to describe actionAction & payload if needed
@@ -54,6 +55,10 @@ export function AuthorBooksIsReadAction(): BookAction {
     return { type: BookActionType.authorBooksIsRead };
 }
 
+export function BooksClearAction(): BookAction {
+    return { type: BookActionType.BooksClear };
+}
+
 // Step 5 - Reducer function perform the required action
 export function bookReducer(currentState: BookAppState = new BookAppState(),action:BookAction): BookAppState{
     // const newState = new CatsAppState();
@@ -84,6 +89,9 @@ export function bookReducer(currentState: BookAppState = new BookAppState(),acti
             break;
         case BookActionType.authorBooksIsRead:
             newState.authorBooksIsRead = false;
+            break;
+        case BookActionType.BooksClear:
+            newState.Books = [];
             break;
     }
     return newState;

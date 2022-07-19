@@ -1,5 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import Login from "../AuthArea/Login";
+import Logout from "../AuthArea/Logout";
+import Register from "../AuthArea/Register";
 import AddAuthor from "../AuthorArea/AddAuthor";
 import AuthorList from "../AuthorArea/AuthorList";
 import DeleteAuthor from "../AuthorArea/DeleteAuthor";
@@ -9,7 +12,9 @@ import BookList from "../BookArea/BookList";
 import BooksByAuthor from "../BookArea/BooksByAuthor";
 import DeleteBook from "../BookArea/DeleteBook";
 import UpdateBook from "../BookArea/UpdateBook";
+import About from "./About";
 import Home from "./Home";
+import Page404 from "./Page404";
 
 function Routing() {
   return (
@@ -19,12 +24,12 @@ function Routing() {
       <Route index element={<Home />} />
 
       {/* generic components */}
-      {/* <Route path="/about" element={<About />} /> */}
+      <Route path="/about" element={<About />} />
 
       {/* auth */}
-      {/* <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/register" element={<Register />} /> */}
+          <Route path="/register" element={<Register />} />
 
             {/* author related components */}
       <Route path="/authors" element={<AuthorList />} />
@@ -43,7 +48,7 @@ function Routing() {
 
 
       {/* 404 - must be last */}
-      {/* <Route path="*" element={<Page404/>}/> */}
+      <Route path="*" element={<Page404/>}/>
     </Routes>
   );
 }

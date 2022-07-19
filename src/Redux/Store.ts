@@ -1,4 +1,5 @@
 import { combineReducers, createStore } from "redux";
+import { authReducer } from "./AuthAppState";
 import { authorReducer } from "./AuthorAppState";
 import { bookReducer } from "./BookAppState";
 
@@ -12,6 +13,7 @@ import { bookReducer } from "./BookAppState";
 const reducers = combineReducers({
   authors: authorReducer,
   books: bookReducer,
+  auth: authReducer,
 });
 const store = createStore(reducers);
 

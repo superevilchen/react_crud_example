@@ -11,6 +11,10 @@ export enum SccMsg {
   UPDATED_BOOK = "Updated book successfully",
   DELETED_BOOK = "Deleted book successfully",
   GOT_BOOK = "got books successfully",
+
+  LOGIN_SUCCESS = "Login Success successfully",
+  LOGOUT_SUCCESS = "Logout Successfully",
+  REGISTER_SUCCESS = "Registered Successfully"
 }
 
 // edit here - fail status
@@ -24,6 +28,10 @@ export enum ErrMsg {
   FAIL_UPDATED_BOOK = "Failed to update book",
   FAIL_DELETED_BOOK = "Failed to delete book",
   FAIL_GOT_BOOK = "Failed to get books",
+
+  FAIL_LOGIN = "Failed to login",
+  FAIL_LOGOUT = "Failed to log out",
+  FAIL_REGISTER = "Failed to register",
 }
 class Notify {
   private notification = new Notyf({

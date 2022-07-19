@@ -13,6 +13,7 @@ export enum AuthorActionType {
     AuthorUpdated = "AuthorUpdated",
     AuthorDeleted = "AuthorDeleted",
     AuthorsRead = "AuthorsRead",
+    AuthorsClear = "AuthorsClear"
 }
 
 // Step 3 - Define Action Interface to describe actionAction & payload if needed
@@ -42,6 +43,10 @@ export function authorsReadAction(): AuthorAction {
     return { type: AuthorActionType.AuthorsRead };
 }
 
+export function AuthorsClearAction(): AuthorAction {
+    return { type: AuthorActionType.AuthorsClear };
+}
+
 // Step 5 - Reducer function perform the required action
 export function authorReducer(currentState: AuthorAppState = new AuthorAppState(),action:AuthorAction): AuthorAppState{
     // const newState = new CatsAppState();
@@ -66,6 +71,9 @@ export function authorReducer(currentState: AuthorAppState = new AuthorAppState(
         case AuthorActionType.AuthorsRead:
             newState.isRead = false;
             break;
+            case AuthorActionType.AuthorsClear:
+                newState.authors = [];
+                break;
     }
     return newState;
     
