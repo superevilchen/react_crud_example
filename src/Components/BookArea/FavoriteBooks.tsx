@@ -4,7 +4,7 @@ import { Book } from '../../Models/Book';
 import { FavoriteBooksDownloadedAction } from '../../Redux/FavoritesAppState';
 import store from '../../Redux/Store'
 import { getFavoriteBooks } from '../../Utils/ApiArea/BookApi';
-import EmptyView from '../SharedArea/EmptyView';
+import notify, { ErrMsg, SccMsg } from '../../Utils/Notification/Notify';
 import BookItem from './BookItem';
 
 function FavoriteBooks() {
@@ -18,15 +18,15 @@ function FavoriteBooks() {
             .then(response => {
                 setBooks(response.data)
                 store.dispatch(FavoriteBooksDownloadedAction(response.data))
-                
+                notify.success(SccMsg.GOT_BOOK)
             })
-        .catch(() => {})
+        .catch(() => {notify.error(ErrMsg.FAIL_GOT_BOOK)})
         }
     }, [])
 
   return (
       <div>
-          {books.length > 0 ? books.map(b => <BookItem key={b.id} book={b}/>) : <EmptyView/>}
+          {books.length > 0 ? books.map(b => <BookItem key={b.id} book={b}/>) : <h3>You didn't add anything yet!!</h3>}
     </div>
   )
 }

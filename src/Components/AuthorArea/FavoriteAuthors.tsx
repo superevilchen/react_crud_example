@@ -3,6 +3,7 @@ import { Author } from '../../Models/Author'
 import { FavoriteAuthorsDownloadedAction } from '../../Redux/FavoritesAppState';
 import store from '../../Redux/Store'
 import { getFavoriteAuthors } from '../../Utils/ApiArea/AuthorApi';
+import notify, { ErrMsg, SccMsg } from '../../Utils/Notification/Notify';
 import EmptyView from '../SharedArea/EmptyView';
 import AuthorItem from './AuthorItem';
 
@@ -17,10 +18,9 @@ function FavoriteAuthors() {
                 .then(response => {
                     setAuthors(response.data)
                     store.dispatch(FavoriteAuthorsDownloadedAction(response.data))
-                    
+                    notify.success(SccMsg.GOT_AUTHOR)
                 })
-            .catch(() => {})
-            // implement
+            .catch(() => {notify.error(ErrMsg.FAIL_GOT_AUTHOR)})
         }
     }, [])
 
