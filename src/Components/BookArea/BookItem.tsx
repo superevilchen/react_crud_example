@@ -28,21 +28,18 @@ function BookItem(props: BookItemProps) {
       .catch(() => notify.error(ErrMsg.FAIL_ADDED_BOOK));
   };
 
-  return (
-    <div>
-      <p>ID: {props.book.id}</p>
-      <p>Name: {props.book.name}</p>
-      <p>Release Year: {props.book.year}</p>
-
-      {props.book.author ? <p>Author: {props.book.author?.name}</p> : <></>}
-
-      <>
-        {user.role === "ADMIN" ? (
+  const userFunctions = (role: string) => {
+    switch (role) {
+      case "ADMIN":
+        return (
           <>
             <Link to={`/update-book/${props.book.id}`}>Update</Link>
             <Link to={`/delete-book/${props.book.id}`}>Delete</Link>
           </>
-        ) : (
+        );
+
+      case "USER":
+        return (
           <>
             {store
               .getState()
@@ -60,8 +57,26 @@ function BookItem(props: BookItemProps) {
               <button onClick={addToFavorite}>Add to Favorites</button>
             )}
           </>
-        )}
-      </>
+        );
+
+      default:
+        return <></>;
+    }
+  };
+
+  return (
+    <div>
+      <p>ID: {props.book.id}</p>
+      <p>Name: {props.book.name}</p>
+      <span>Release Year: </span>
+      <Link to={`/filter-books/${props.book.year}`}>
+        <span>{props.book.year}</span>
+      </Link>
+      <br />
+
+      {props.book.author ? <p>Author: {props.book.author?.name}</p> : <></>}
+
+      {userFunctions(user.role)}
     </div>
   );
 }

@@ -28,5 +28,5 @@ export const addFavoriteBook = async (bookID: number) => {
 };
 
 export const getFavoriteBooks = async () => {
-  return await TokenAxios.get<Book[]>(`${globals.urls.books}all-favorites)`);
+  return await TokenAxios.get<Book[]>(`${globals.urls.books}all-favorites`);
 }

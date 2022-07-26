@@ -13,6 +13,7 @@ import BookList from "../BookArea/BookList";
 import BooksByAuthor from "../BookArea/BooksByAuthor";
 import DeleteBook from "../BookArea/DeleteBook";
 import FavoriteBooks from "../BookArea/FavoriteBooks";
+import FilterBooks from "../BookArea/FilterBooks";
 import UpdateBook from "../BookArea/UpdateBook";
 import About from "./About";
 import Home from "./Home";
@@ -47,8 +48,8 @@ function Routing() {
     <Route path="/delete-book/:id" element={<DeleteBook />} /> 
       <Route path="/update-book/:id" element={<UpdateBook />} />
       <Route path="/books-by-author/:id" element={<BooksByAuthor />} /> 
-      <Route path="/favorite-authors" element={<FavoriteAuthors/>}/>
-
+      <Route path="/favorite-authors" element={<FavoriteAuthors />} />
+      <Route path="/filter-books/:action" element={<FilterBooks/>}/>
 
 
       {/* 404 - must be last */}

@@ -24,10 +24,7 @@ function BookList() {
     return store.subscribe(() => {
       setBooks(store.getState().books.Books);
     });
-
   }, []);
-
-    
 
   return (
     <div>

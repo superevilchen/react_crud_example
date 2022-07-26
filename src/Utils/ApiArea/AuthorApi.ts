@@ -26,5 +26,5 @@ export const addFavoriteAuthor = async (authorID: number) => {
 };
 
 export const getFavoriteAuthors = async () => {
-  return await TokenAxios.get<Author[]>(`${globals.urls.authors}all-favorites)`);
+  return await TokenAxios.get<Author[]>(`${globals.urls.authors}all-favorites`);
 }

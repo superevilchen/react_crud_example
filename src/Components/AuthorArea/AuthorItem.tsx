@@ -30,6 +30,42 @@ function AuthorItem(props: AuthorItemProps) {
     .catch(() => notify.error(ErrMsg.FAIL_ADDED_AUTHOR))
   }
 
+  const userFunctions = (role: string) => {
+    switch (role) {
+
+      case "ADMIN":
+        return (
+          <>
+          <Link to={`/update-author/${props.author.id}`}>Update</Link>
+       <Link to={`/delete-author/${props.author.id}`}>Delete</Link>
+         </>
+        )
+      
+      case "USER":
+        return (
+          <>
+              {store.getState().favorites.favoriteAuthors.filter(a => a.id === props.author.id)[0] ?
+                <>
+                
+                {!location.pathname.includes("favorite-authors") ?
+                <h4>Already in your favorites!</h4>
+                :
+                <></>}
+                  
+                </>
+                :
+                <>
+                <button onClick={addToFavorite}>Add to Favorites</button>
+                </>}
+            </>
+        )
+
+      default:
+        return (<></>)
+
+    }
+  }
+
   return (
     <div>
       <p>ID: {props.author.id}</p>
@@ -44,28 +80,8 @@ function AuthorItem(props: AuthorItemProps) {
             </Link>
           </button>
 
-          {user.role === "ADMIN" ?
-            <>
-             <Link to={`/update-author/${props.author.id}`}>Update</Link>
-          <Link to={`/delete-author/${props.author.id}`}>Delete</Link>
-            </>
-            :
-            <>
-              {store.getState().favorites.favoriteAuthors.filter(a => a.id === props.author.id)[0] ?
-                <>
-                
-                {!location.pathname.includes("favorite-authors") ?
-                <h4>Already in your favorites!</h4>
-                :
-                <></>}
-                  
-                </>
-                :
-                <>
-                <button onClick={addToFavorite}>Add to Favorites</button>
-                </>}
-            </>}
-         
+          {userFunctions(user.role)}
+
         </>
       ) : (
         <></>
